@@ -7,6 +7,7 @@ import (
 )
 
 type Conf struct {
+	ENV           string `env:"ENV" envDefault:"PROD"`
 	HttpAddr      string `env:"HTTP_ADDR" envDefault:"0.0.0.0:8080"`
 	BadgetDataDir string `env:"BADGER_DB_PATH" envDefault:"./badger_data"`
 }

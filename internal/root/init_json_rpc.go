@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"log"
+	"net/http"
 
 	urlModels "short_tail/internal/domain/url/models"
 
@@ -73,6 +74,12 @@ func (r *Root) initJsonRpc(_ context.Context) error {
 	err = r.Adapters.JsonRpc.RegisterMethod("UnShort", unShortHandler, urlModels.URL{}, urlModels.URL{})
 	if err != nil {
 		return fmt.Errorf("r.Adapters.JsonRpc.RegisterMethod: %w", err)
+	}
+
+	http.Handle("/jrpc", r.Adapters.JsonRpc)
+
+	if r.Cfg.ENV == "DEV" {
+		http.HandleFunc("/jrpc/debug", r.Adapters.JsonRpc.ServeDebug)
 	}
 
 	return nil

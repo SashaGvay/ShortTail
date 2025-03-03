@@ -3,8 +3,8 @@ package root
 import (
 	"context"
 	"fmt"
+	"log"
 	"net/http"
-
 	"short_tail/config"
 	"short_tail/internal/domain/url"
 	urlRepository "short_tail/internal/domain/url/repository"
@@ -53,6 +53,8 @@ func New(ctx context.Context, cfg *config.Conf) (*Root, error) {
 		return nil, fmt.Errorf("r.initJsonRpc: %w", err)
 	}
 
+	r.initHttp(ctx)
+
 	return r, nil
 }
 
@@ -75,8 +77,7 @@ func (r *Root) initEntities(_ context.Context) error {
 }
 
 func (r *Root) Run(_ context.Context) error {
-	http.Handle("/jrpc", r.Adapters.JsonRpc)
-	http.HandleFunc("/jrpc/debug", r.Adapters.JsonRpc.ServeDebug)
+	log.Printf("Listening on %s", r.Cfg.HttpAddr)
 
 	if err := http.ListenAndServe(r.Cfg.HttpAddr, http.DefaultServeMux); err != nil {
 		return fmt.Errorf("http.ListenAndServe: %w", err)

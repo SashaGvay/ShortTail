@@ -5,13 +5,14 @@ import (
 	"crypto/sha256"
 	"encoding/base64"
 	"fmt"
+	"strings"
 
 	"short_tail/internal/domain/url/models"
 )
 
 func (s *Service) Short(ctx context.Context, url string) (*models.URL, error) {
 	dto := &models.URL{
-		Original: url,
+		Original: s.removeScheme(url),
 		Alias:    s.generateAlias(url),
 	}
 
@@ -21,6 +22,12 @@ func (s *Service) Short(ctx context.Context, url string) (*models.URL, error) {
 	}
 
 	return dto, err
+}
+
+func (s *Service) removeScheme(url string) string {
+	url = strings.TrimPrefix(url, "http://")
+	url = strings.TrimPrefix(url, "https://")
+	return url
 }
 
 func (s *Service) generateAlias(url string) string {
