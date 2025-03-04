@@ -4,6 +4,7 @@ import (
 	"fmt"
 
 	env "github.com/caarlos0/env/v6"
+	"github.com/joho/godotenv"
 )
 
 type Conf struct {
@@ -15,6 +16,7 @@ type Conf struct {
 func NewConfig() (*Conf, error) {
 	cfg := &Conf{}
 
+	godotenv.Load()
 	if err := env.Parse(cfg, env.Options{}); err != nil {
 		return nil, fmt.Errorf("env.Parse: %w", err)
 	}

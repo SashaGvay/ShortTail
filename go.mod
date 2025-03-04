@@ -6,6 +6,7 @@ require (
 	github.com/caarlos0/env/v6 v6.10.1
 	github.com/dgraph-io/badger/v4 v4.5.1
 	github.com/goccy/go-json v0.9.11
+	github.com/joho/godotenv v1.5.1
 	github.com/osamingo/jsonrpc/v2 v2.4.2
 	github.com/stretchr/testify v1.10.0
 )
