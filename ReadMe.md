@@ -10,3 +10,6 @@ first copy .env
 run app:
 
     make run
+
+---
+UI is available at http://localhost:8080/
