@@ -13,3 +13,5 @@ run app:
 
 ---
 UI is available at http://localhost:8080/
+
+![example_ui.png](example_ui.png)

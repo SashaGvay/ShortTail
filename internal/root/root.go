@@ -71,7 +71,7 @@ func (r *Root) initInfrastructure(_ context.Context) error {
 
 func (r *Root) initEntities(_ context.Context) error {
 	r.Entity.Url.Repository = urlRepository.New(r.Infrastructure.DbInstance)
-	r.Entity.Url.Service = urlService.New(r.Entity.Url.Repository)
+	r.Entity.Url.Service = urlService.New(r.Entity.Url.Repository, r.Cfg.HttpAddr)
 
 	return nil
 }

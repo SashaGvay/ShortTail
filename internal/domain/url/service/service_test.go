@@ -28,7 +28,7 @@ func TestShort_Success(t *testing.T) {
 	svc := Service{Repository: mockRepo}
 
 	ctx := context.Background()
-	testURL := "https://example.com"
+	testURL := "example.com"
 	expectedAlias := svc.generateAlias(testURL)
 
 	mockRepo.On("Put", ctx, mock.MatchedBy(func(dto *models.URL) bool {

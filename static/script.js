@@ -1,7 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
     const form = document.getElementById("shorten-form");
     const input = document.getElementById("url-input");
-    const result = document.getElementById("result");
+    const resultLink = document.getElementById("result-link");
+    const resultQRCode = document.getElementById("result-qrcode");
 
     form.addEventListener("submit", async (event) => {
         event.preventDefault();
@@ -22,9 +23,10 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const data = await response.json();
         if (data.result) {
-            result.innerHTML = `Shortened URL: <a href="/${data.result.alias}">${data.result.alias}</a>`;
+            resultLink.innerHTML = `Shortened URL: <a href="/${data.result.alias}">/${data.result.alias}</a>`;
+            resultQRCode.src = data.result.qrcode;
         } else {
-            result.textContent = "Error shortening URL.";
+            resultLink.textContent = "Error shortening URL.";
         }
     });
 });

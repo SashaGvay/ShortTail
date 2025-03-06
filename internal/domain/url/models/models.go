@@ -12,5 +12,6 @@ type (
 	URL struct {
 		Original string `json:"original,omitempty"`
 		Alias    string `json:"alias,omitempty"`
+		QrCode   string `json:"qrcode,omitempty"`
 	}
 )
