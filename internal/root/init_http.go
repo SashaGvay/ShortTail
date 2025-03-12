@@ -20,8 +20,10 @@ func (r *Root) initHttp(_ context.Context) {
 			return
 		}
 
+		r.Metrics.CollectRedirect()
 		http.Redirect(w, req, "//"+dto.Original, http.StatusFound)
 	})
 
+	http.Handle("/metrics", r.Metrics.Handler())
 	http.Handle("/static/", http.StripPrefix("/static/", http.FileServer(http.Dir("static"))))
 }

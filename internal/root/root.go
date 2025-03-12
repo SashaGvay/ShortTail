@@ -5,8 +5,11 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+
 	"short_tail/config"
 	"short_tail/internal/domain/url"
+	"short_tail/internal/metrics"
+
 	urlRepository "short_tail/internal/domain/url/repository"
 	urlService "short_tail/internal/domain/url/service"
 
@@ -31,12 +34,16 @@ type Root struct {
 			Repository url.Repository
 		}
 	}
+
+	Metrics *metrics.Metrics
 }
 
 func New(ctx context.Context, cfg *config.Conf) (*Root, error) {
 	r := &Root{
 		Cfg: cfg,
 	}
+
+	r.initMetrics(ctx)
 
 	err := r.initInfrastructure(ctx)
 	if err != nil {
@@ -74,6 +81,10 @@ func (r *Root) initEntities(_ context.Context) error {
 	r.Entity.Url.Service = urlService.New(r.Entity.Url.Repository, r.Cfg.HttpAddr)
 
 	return nil
+}
+
+func (r *Root) initMetrics(_ context.Context) {
+	r.Metrics = metrics.New()
 }
 
 func (r *Root) Run(_ context.Context) error {
